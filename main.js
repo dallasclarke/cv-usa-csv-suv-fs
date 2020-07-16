@@ -14,10 +14,12 @@ const file = fs.readFileSync('./owid-covid-usa-data.csv', 'utf-8');
 const casesByDay = require('./get-new-cases-by-day.js');
 const getRows = require('./get-rows.js');
 const totalCasesByDay = require('./get-total-cases-by-day.js');
+const caseDifference = require('./stretch-goal.js')
 
 
 let command = process.argv[2];
 let userDates = process.argv[3];
+let userDates2 = process.argv[4]
 const fileData = getRows(file);
 
 
@@ -27,7 +29,11 @@ if (command === 'new') {
 else if (command === 'total') {
     console.log(totalCasesByDay(userDates, fileData))
 } 
+else if (command === 'difference') {
+    console.log(caseDifference(userDates, userDates2, fileData))
+}
 else {
     console.log('Please Enter the following:')
     console.log('New/total plus the date(Year,Month,Day), to find new cases that day or the total up to that date');
+    console.log('You can also type difference with two dates to find the difference between cases for those days.')
 }
